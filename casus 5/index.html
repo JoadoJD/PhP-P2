@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Gastenboek</title>
+</head>
+<body>
+    <h1>Laat een bericht achter</h1>
+    <form action="verwerk_formulier.php" method="post">
+        Naam: <input type="text" name="naam" required><br>
+        Bericht: <textarea name="bericht" required></textarea><br>
+        <input type="submit" value="Plaats reactie">
+    </form>
+    <br>
+    <a href="weergave_reacties.php">Bekijk reacties</a>
+</body>
+</html>
