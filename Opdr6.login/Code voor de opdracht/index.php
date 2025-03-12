@@ -1,6 +1,6 @@
 <?php
     // Functie: programma login OOP 
-    // Auteur: joaquim
+    // Auteur: joaquimm
 
     // Initialisatie
 ?>
