@@ -1,71 +1,40 @@
 <?php
-	
-	// Is de login button aangeklikt?
-	if(isset($_POST['login-btn']) ){
+//gemaakt door: joaquim
 
-		require_once('classes/user.php');
-		$user = new User();
+require_once "user.php";
 
-		$user->username = $_POST['username'];
-		$user->SetPassword($_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $user = new User();
+    $user->username = $_POST["username"];
 
-		$user->ShowUser();
+    if ($user->loginUser($_POST["password"])) {
+        echo "<script>alert('Login succesvol!'); window.location = 'index.php';</script>";
+        exit();
+    }
 
-		// Validatie gegevens
-		$errors = $user->ValidateUser();
-
-		// Indien geen fouten dan inloggen
-		if(count($errors)== 0){
-			//Inlogen
-			if ($user->LoginUser()){
-				echo "LOgin ok";
-				// Ga naar pagina??
-				header("location: index.php");
-			} else
-			{
-				array_push($errors, "Login mislukt");
-				echo "LOgin NOT ok";
-			}
-		}
-
-		if(count($errors) > 0){
-			$message = "";
-			foreach ($errors as $error) {
-				$message .= $error . "\\n";
-			}
-			
-			echo "
-			<script>alert('" . $message . "')</script>
-			<script>window.location = 'login_form.php'</script>";
-		
-		}
-		
-	}
+    $errorMessage = "Ongeldige gebruikersnaam of wachtwoord.";
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-	</head>
+<html lang="nl">
 <body>
+    <h3>Inloggen</h3>
+    
+    <?php if (!empty($errorMessage)): ?>
+        <p style="color: red;"><?= htmlspecialchars($errorMessage) ?></p>
+    <?php endif; ?>
 
-	<h3>PHP - PDO Login and Registration</h3>
-	<hr/>
-	
-	<form action="" method="POST">	
-		<h4>Login here...</h4>
-		<hr>
-		
-		<label>Username</label>
-		<input type="text" name="username" />
-		<br>
-		<label>Password</label>
-		<input type="password" name="password" />
-		<br>
-		<button type="submit" name="login-btn">Login</button>
-		<br>
-		<a href="register_form.php">Registration</a>
-	</form>
-		
+    <form method="POST">
+        <label>Gebruikersnaam:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label>Wachtwoord:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    
+    <a href="register_form.php">Registreer hier</a>
 </body>
 </html>

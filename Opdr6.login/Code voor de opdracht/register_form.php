@@ -1,71 +1,43 @@
 <?php
+//gemaakt door: joaquim
 
-// Is de register button aangeklikt?
-if(isset($_POST['register-btn'])){
-	require_once('classes/user.php');
-	$user = new User();
-	$errors=[];
+require_once "user.php";
 
-	$user->username = $_POST['username'];
-	$user->SetPassword($_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $user = new User();
+    $user->username = $_POST["username"];
+    $user->email = $_POST["email"];
+    $user->setPassword($_POST["password"]);
 
-	$user->ShowUser();
+    if (empty($user->registerUser())) {
+        echo "<script>alert('Registratie succesvol'); window.location = 'login_form.php';</script>";
+        exit();
+    }
 
-	// Validatie gegevens
-	// Hoe???
-
-	if(count($errors) == 0){
-		// Register user
-		$errors = $user->RegisterUser();
-	}
-	
-	if(count($errors) > 0){
-		$message = "";
-		foreach ($errors as $error) {
-			$message .= $error . "\\n";
-		}
-		
-		echo "
-		<script>alert('" . $message . "')</script>
-		<script>window.location = 'register_form.php'</script>";
-	
-	} else {
-		echo "
-			<script>alert('" . "User registerd" . "')</script>
-			<script>window.location = 'login_form.php'</script>";
-	}
-
+    $errorMessage = "Fout: " . implode(", ", $user->registerUser());
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="nl">
 <body>
-	
-
-		<h3>PHP - PDO Login and Registration</h3>
-		<hr/>
-
-			<form action="" method="POST">	
-				<h4>Register here...</h4>
-				<hr>
-				
-				<div>
-					<label>Username</label>
-					<input type="text"  name="username" />
-				</div>
-				<div >
-					<label>Password</label>
-					<input type="password"  name="password" />
-				</div>
-				<br />
-				<div>
-					<button type="submit" name="register-btn">Register</button>
-				</div>
-				<a href="index.php">Home</a>
-			</form>
-
-
+    <h3>Registreren</h3>
+    <?php if (!empty($errorMessage)): ?>
+        <p style="color: red;"><?= htmlspecialchars($errorMessage) ?></p>
+    <?php endif; ?>
+    
+    <form method="POST">
+        <label>Gebruikersnaam:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label>Wachtwoord:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Registreer</button>
+    </form>
+    <a href="index.php">Terug</a>
 </body>
 </html>
