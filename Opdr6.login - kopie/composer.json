@@ -1,0 +1,15 @@
+{
+    "name": "joaqu/opdr6.login-kopie",
+    "autoload": {
+        "psr-4": {
+            "Login\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JoadoJD",
+            "email": "9021804@student.tcrmbo.nl"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,17 @@
+{
+    "name": "joaqu/opdracht_unittest_calculator",
+    "require-dev": {
+        "phpunit/phpunit": "^12.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Login\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JoadoJD",
+            "email": "9021804@student.tcrmbo.nl"
+        }
+    ]
+}
